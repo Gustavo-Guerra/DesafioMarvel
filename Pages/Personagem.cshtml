@@ -1,0 +1,35 @@
+@page
+@model PersonagemModel
+@{
+    ViewData["Title"] = "Personagens Marvel";
+}
+
+<div class="text-center">
+    <h1 style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;" class="display-4">MARVEL</h1>
+    <p>Consulte o nome do personagem desejado (em inglês).</p>
+    @if (Model.dataWrapper != null)
+    {
+        if (!Model.achouPersonagem)
+        {
+            <p style="color: red;">Personagem não encontrado, favor tentar novamente</p>
+        }
+        else if (Model.dataWrapper.data.count==1)
+        {
+            <hr>
+            <h1>
+                <p>@Model.dataWrapper.data.results[0].name</p>
+            </h1>
+            <p>@Model.dataWrapper.data.results[0].description</p>
+            <p><img src='@(Model.dataWrapper.data.results[0].thumbnail.url)' alt=""></p>
+        }
+    }
+    <input type="text" id="nomePersonagem">
+    <button type="submit" class="btn btn-dark" onclick="pesquisarpersonagem()">Pesquisar</button>
+</div>
+
+<script>
+    function pesquisarpersonagem() {
+        let nome = $("#nomePersonagem").val();
+        location.href = "https://localhost:5001/Personagem?nomePersonagem=" + nome;
+    }
+</script>
